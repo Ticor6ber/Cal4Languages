@@ -7,58 +7,92 @@
 
 <style>
 body {
-  font-family: Arial;
-  background: #0f172a;
-  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1e3a8a, #9333ea);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
   text-align: center;
-  padding: 40px;
+  color: white;
+  width: 320px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 22px;
 }
 
 input {
-  padding: 10px;
-  margin: 5px;
-  width: 120px;
-  border-radius: 8px;
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
   border: none;
+  outline: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 14px;
+}
+
+input::placeholder {
+  color: #ddd;
 }
 
 button {
-  padding: 10px 20px;
-  margin: 10px;
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  background: #22c55e;
-  color: black;
   font-weight: bold;
+  transition: 0.3s;
 }
 
+/* Colores por operación */
+.suma { background: #22c55e; }
+.resta { background: #f59e0b; }
+.multi { background: #3b82f6; }
+.div { background: #ef4444; }
+
 button:hover {
-  background: #16a34a;
+  transform: scale(1.05);
+  opacity: 0.9;
 }
 
 #resultado {
-  margin-top: 20px;
-  font-size: 20px;
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
 }
 </style>
 
 </head>
 <body>
 
-<h1>Calculadora con Microservicios</h1>
+<div class="container">
+  <h1>Calculadora Microservicios</h1>
 
-<input type="number" id="num1" placeholder="Número 1">
-<input type="number" id="num2" placeholder="Número 2">
+  <input type="number" id="num1" placeholder="Número 1">
+  <input type="number" id="num2" placeholder="Número 2">
 
-<br>
+  <button class="suma" onclick="sumar()">Suma (Node)</button>
+  <button class="resta" onclick="restar()">Resta (Express)</button>
+  <button class="multi" onclick="multiplicar()">Multiplicación (PHP)</button>
+  <button class="div" onclick="dividir()">División (Python)</button>
 
-<button onclick="sumar()">Suma (Node)</button>
-<button onclick="restar()">Resta (Express)</button>
-<button onclick="multiplicar()">Multiplicación (PHP)</button>
-<button onclick="dividir()">División (Python)</button>
-
-<div id="resultado"></div>
+  <div id="resultado"></div>
+</div>
 
 <script>
 const getValores = () => {
@@ -68,54 +102,38 @@ const getValores = () => {
   };
 };
 
-// ✅ NODE - PATH PARAMS
 async function sumar() {
   const { num1, num2 } = getValores();
-
   const res = await fetch(`https://nodesumapath.onrender.com/suma/${num1}/${num2}`);
   const data = await res.json();
-
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
 }
 
-// ✅ EXPRESS - QUERY
 async function restar() {
   const { num1, num2 } = getValores();
-
   const res = await fetch(`https://expressrestaquery.onrender.com/resta?num1=${num1}&num2=${num2}`);
   const data = await res.json();
-
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
 }
 
-// ✅ PHP - BODY
 async function multiplicar() {
   const { num1, num2 } = getValores();
-
   const res = await fetch(`https://automlucas.com/multi/index.php`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ num1, num2 })
   });
-
   const data = await res.json();
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
 }
 
-// ✅ PYTHON - BODY
 async function dividir() {
   const { num1, num2 } = getValores();
-
   const res = await fetch(`https://microservicios-4-lenguajes.onrender.com/dividir`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ num1, num2 })
   });
-
   const data = await res.json();
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
 }
