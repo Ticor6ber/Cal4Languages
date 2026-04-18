@@ -104,14 +104,14 @@ const getValores = () => {
 
 async function sumar() {
   const { num1, num2 } = getValores();
-  const res = await fetch(`https://nodesumapath.onrender.com/suma/${num1}/${num2}`);
+  const res = await fetch(`https://sumanode.onrender.com/suma/${num1}/${num2}`);
   const data = await res.json();
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
 }
 
 async function restar() {
   const { num1, num2 } = getValores();
-  const res = await fetch(`https://expressrestaquery.onrender.com/resta?num1=${num1}&num2=${num2}`);
+  const res = await fetch(`https://restaexpres.onrender.com/resta?num1=${num1}&num2=${num2}`);
   const data = await res.json();
   document.getElementById("resultado").innerText = "Resultado: " + data.resultado;
 }
@@ -129,7 +129,7 @@ async function multiplicar() {
 
 async function dividir() {
   const { num1, num2 } = getValores();
-  const res = await fetch(`https://microservicios-4-lenguajes.onrender.com/dividir`, {
+  const res = await fetch(`https://divisionpython.onrender.com/dividir`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ num1, num2 })
